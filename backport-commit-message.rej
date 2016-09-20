@@ -1,0 +1,11 @@
+Backport PR #8383
+---------
+
+**Commit 1:**
+Update absolute time picker when time selection changes.
+
+Listen for changes made to timefilter.time and update the absolute time
+picker accordingly.
+
+* Original sha: 12f61e1eb9b2a232fe508f6bf4da24c006b47e2e
+* Authored by Stacey-Gammon <gammon@elastic.co> on 2016-09-20T19:41:50Z
