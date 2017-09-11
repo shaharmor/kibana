@@ -8,16 +8,17 @@ const MetricsRequestHandlerProvider = function (Private, Notifier, config, timef
 
   return {
     name: 'metrics',
-    handler: function (vis /*, appState, uiState, queryFilter*/) {
+    handler: function (vis , appState, uiState) {
       const timezone = Private(timezoneProvider)();
-
       return new Promise((resolve) => {
         const panel = vis.params;
+        const uiStateObj = uiState.get(panel.type, {});
         if (panel && panel.id) {
           const params = {
             timerange: { timezone, ...timefilter.getBounds() },
             filters: [dashboardContext()],
-            panels: [panel]
+            panels: [panel],
+            state: uiStateObj
           };
 
           try {

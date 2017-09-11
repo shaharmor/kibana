@@ -5,6 +5,7 @@ import _ from 'lodash';
 import timeseries from './vis_types/timeseries/vis';
 import metric from './vis_types/metric/vis';
 import topN from './vis_types/top_n/vis';
+import table from './vis_types/table/vis';
 import gauge from './vis_types/gauge/vis';
 import markdown from './vis_types/markdown/vis';
 import Error from './error';
@@ -13,6 +14,7 @@ const types = {
   timeseries,
   metric,
   top_n: topN,
+  table,
   gauge,
   markdown
 };
@@ -37,7 +39,9 @@ function Visualization(props) {
       model: props.model,
       onBrush: props.onBrush,
       onChange: props.onChange,
-      visData: props.visData
+      onUiState: props.onUiState,
+      uiState: props.uiState,
+      visData: visData.type === model.type ? visData : {}
     });
   }
   return (<div className={props.className} />);
@@ -53,6 +57,8 @@ Visualization.propTypes = {
   model: PropTypes.object,
   onBrush: PropTypes.func,
   onChange: PropTypes.func,
+  onUiState: PropTypes.func,
+  uiState: PropTypes.object,
   reversed: PropTypes.bool,
   visData: PropTypes.object,
   dateFormat: PropTypes.string
