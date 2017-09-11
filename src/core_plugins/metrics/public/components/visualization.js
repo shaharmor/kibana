@@ -41,7 +41,7 @@ function Visualization(props) {
       onChange: props.onChange,
       onUiState: props.onUiState,
       uiState: props.uiState,
-      visData: visData.type === model.type ? visData : {}
+      visData: visData.type === model.type ? visData : { [model.id]: model, type: model.type }
     });
   }
   return (<div className={props.className} />);
