@@ -54,6 +54,8 @@
     "build": "grunt build",
     "release": "grunt release",
     "start": "sh ./bin/kibana --dev",
+    "start:background": "nohup sh ./bin/kibana --dev &",
+    "stop:background": "ps aux | grep node | grep 'src/cli' | awk '{print $2}' | xargs -L 1 kill",
     "precommit": "grunt precommit",
     "karma": "karma start",
     "elasticsearch": "grunt esvm:dev:keepalive",
