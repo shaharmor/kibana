@@ -1,15 +1,17 @@
 import React from 'react';
 import { getDisplayName } from './lib/get_display_name';
-import { last, findIndex, first } from 'lodash';
+import { get, last, findIndex, first } from 'lodash';
 import calculateLabel  from '../../common/calculate_label';
 export function visWithSplits(WrappedComponent) {
   function SplitVisComponent(props) {
     const { model, visData } = props;
-    if (visData[model.id].series.every(s => s.id.split(':').length === 1)) {
+    const series = get(visData, `${model.id}.series`, []);
+
+    if (series.every(s => s.id.split(':').length === 1)) {
       return (<WrappedComponent {...props} />);
     }
 
-    const splitsVisData = visData[model.id].series.reduce((acc, series) => {
+    const splitsVisData = series.reduce((acc, series) => {
       const [seriesId, splitId] = series.id.split(':');
       const seriesModel = model.series.find(s => s.id === seriesId);
       if (!seriesModel || !splitId) return acc;
@@ -25,7 +27,7 @@ export function visWithSplits(WrappedComponent) {
       return acc;
     }, {});
 
-    const nonSplitSeries = first(visData[model.id].series.filter((series) => {
+    const nonSplitSeries = first(series.filter((series) => {
       const seriesModel = model.series.find(s => s.id === series.id);
       if (!seriesModel) return false;
       return ['everything', 'filter'].includes(seriesModel.split_mode);
