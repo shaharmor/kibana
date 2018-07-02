@@ -78,6 +78,11 @@ export function SearchPollProvider(Private, Promise, $rootScope) {
       // Schedule another search.
       this.resetTimer();
 
+      // skip refresh if tab is not viewable
+      if (document.hidden) {
+        return;
+      }
+
       // We use resolve() here instead of try() because the latter won't trigger a $digest
       // when the promise resolves.
       this._searchPromise = Promise.resolve().then(() => {
